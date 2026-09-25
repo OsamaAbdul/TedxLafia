@@ -129,17 +129,15 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const isHomePage = pathname === "/";
 
   return (
     <QueryClientProvider client={queryClient}>
-      {!isHomePage && <Header />}
+      <Header />
       <main id="main">
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
       </main>
-      {!isHomePage && <Footer />}
+      <Footer />
       <Toaster position="bottom-right" />
     </QueryClientProvider>
   );

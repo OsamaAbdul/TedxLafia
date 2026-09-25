@@ -1,14 +1,18 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { PartnerTile } from "@/components/site/Cards";
 import { Reveal } from "@/components/site/Reveal";
 import { Button } from "@/components/ui/button";
-import { partnersQuery } from "@/lib/queries";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 export const Route = createFileRoute("/partners")({
-  loader: ({ context }) => context.queryClient.ensureQueryData(partnersQuery),
   head: () => ({
     meta: [
       { title: "Partners — TEDxLafia" },
@@ -20,69 +24,60 @@ export const Route = createFileRoute("/partners")({
       { property: "og:title", content: "Partner with TEDxLafia" },
       {
         property: "og:description",
-        content: "Tiers, what partnership covers, and how to start the conversation.",
+        content: "Our main partners and sponsors, and how to start the conversation.",
       },
     ],
   }),
   component: Partners,
 });
 
-const TIERS = [
-  {
-    name: "Headline",
-    price: "₦2,500,000",
-    items: [
-      "Name alongside the event across all editions materials",
-      "Eight guest seats and a reserved table at lunch",
-      "Logo on the stage backdrop and all talk videos",
-      "A short welcome from your team on the day",
-    ],
-  },
-  {
-    name: "Supporting",
-    price: "₦1,000,000",
-    items: [
-      "Logo on the website, programme and talk end-cards",
-      "Four guest seats",
-      "Named sponsorship of one session",
-      "Access to event photography and footage",
-    ],
-  },
-  {
-    name: "Community",
-    price: "In kind",
-    items: [
-      "Venue, catering, printing, sound, transport or hospitality",
-      "Two guest seats",
-      "Listed as a community partner across the site",
-      "Best route for local businesses and NGOs",
-    ],
-  },
-];
+const HARDCODED_PARTNERS = [
+  { id: "1", name: "Dan Sarki", logo_url: "/partners/dansarki.jpg" },
+  { id: "2", name: "MSD Designs", logo_url: "/partners/msddesigns.jpg" },
+  { id: "3", name: "O2 Inn", logo_url: "/partners/o2inn.png" },
+] as any[];
 
 function Partners() {
-  const { data: partners } = useSuspenseQuery(partnersQuery);
-
   return (
     <>
       <PageHero
-        eyebrow="Partners"
+        eyebrow="Partners and Sponsors"
         title={
           <>
-            Back the ideas
-            <span className="block italic text-primary">before they're obvious.</span>
+            Our Main Partners <br />
+            <span className="italic text-primary">and Sponsors</span>
           </>
         }
-        description="TEDxLafia is non-profit and volunteer-run. Every naira and every donated chair goes into the room, the recording and the free publication of the talks afterwards."
+        description="The organising team is delighted to be working with the following local businesses and organisations on the delivery of TEDxLafia."
+        bgImages={[
+          "/partners/_KAS3371.jpg",
+          { url: "/partners/_KAS3168.jpg", position: "center 20%" }
+        ]}
       />
 
-      <section className="section-pad">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <SectionHeading eyebrow="In good company" title="Organisations making this possible" />
-          <div className="mt-12 grid gap-px bg-border sm:grid-cols-2 lg:grid-cols-3">
-            {partners.map((p, i) => (
-              <PartnerTile key={p.id} partner={p} index={i} />
-            ))}
+      <section className="section-pad bg-ink text-ink-foreground">
+        <div className="background-dark mx-auto max-w-7xl px-6 lg:px-10">
+          <SectionHeading eyebrow="In good company" title="Organisations making this possible" invert />
+          <div className="mt-12 px-12">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-4">
+                {HARDCODED_PARTNERS.map((p, i) => (
+                  <CarouselItem key={p.id} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                    <div className="h-full">
+                      <PartnerTile partner={p} index={i} />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="bg-background text-foreground hover:bg-primary hover:text-primary-foreground -left-4 lg:-left-12" />
+              <CarouselNext className="bg-background text-foreground hover:bg-primary hover:text-primary-foreground -right-4 lg:-right-12" />
+            </Carousel>
           </div>
         </div>
       </section>
@@ -90,31 +85,39 @@ function Partners() {
       <section className="grid-bg grid-bg-ink bg-ink text-ink-foreground">
         <div className="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
           <SectionHeading
-            eyebrow="Partnership"
-            title="Three ways to stand behind it"
-            description="TED rules keep our stage free of sales pitches — partnership buys presence and goodwill, never a slot in the programme. We think that's exactly why it works."
+            eyebrow="Call For Sponsorship"
+            title="Sponsor TEDxLafia"
+            description="By sponsoring TEDxLafia, your brand is having the opportunity to be associated with the most unique event in Nasarawa state. It also gives your brand the leverage of breaking into the untapped market of Nasarawa State. Other benefits also include having your logo on the videos to be uploaded on the official TEDx YouTube Channel giving your brand exposure to over 30 million individuals in all countries of the world."
             invert
           />
-          <div className="mt-14 grid gap-px bg-ink-foreground/10 lg:grid-cols-3">
-            {TIERS.map((t, i) => (
-              <Reveal key={t.name} delay={i * 0.08} className="flex flex-col bg-ink p-8 lg:p-10">
-                <p className="eyebrow text-primary">{t.name}</p>
-                <p className="mt-5 font-display text-4xl font-light">{t.price}</p>
-                <ul className="mt-8 grid gap-3 text-sm leading-relaxed text-ink-foreground/70">
-                  {t.items.map((item) => (
-                    <li key={item} className="flex gap-3">
-                      <span className="mark-red mt-1.5 shrink-0" aria-hidden />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
-            ))}
+
+          <div className="mt-14 max-w-4xl space-y-8 text-lg leading-relaxed text-ink-foreground/80">
+            <Reveal delay={0.1}>
+              <p>
+                The huge Networking opportunity at the event would also be an explosive opportunity for your brand. The audience would comprise of the young millennials, rural farmers, captains of industries, government officials from state to federal, politicians, military and para-military, etc.
+              </p>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p>
+                Aside from the individual brand exposure and benefits, you are helping bridge the gap in society, helping shape a better community and humanity.
+              </p>
+            </Reveal>
+            <Reveal delay={0.3}>
+              <p>
+                The more your brand name is associated with positive experience the stronger your brand awareness will be.
+              </p>
+            </Reveal>
           </div>
-          <div className="mt-14">
-            <Button asChild variant="editorial" size="editorial">
-              <Link to="/contact">Start a conversation</Link>
-            </Button>
+
+          <div className="mt-16">
+            <Reveal delay={0.4}>
+              <p className="mb-6 font-display text-2xl font-light text-ink-foreground">
+                Would you like to support the event through partnership or sponsorship?
+              </p>
+              <Button asChild variant="editorial" size="editorial">
+                <a href="mailto:TedxLafia@gmail.com">Email TedxLafia@gmail.com</a>
+              </Button>
+            </Reveal>
           </div>
         </div>
       </section>

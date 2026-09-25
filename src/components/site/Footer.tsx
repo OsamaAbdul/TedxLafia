@@ -17,13 +17,25 @@ export function Footer() {
 
           <nav aria-label="Footer" className="grid grid-cols-2 gap-x-8 gap-y-3">
             {NAV.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="eyebrow link-hairline w-fit py-1 text-ink-foreground/70 hover:text-ink-foreground"
-              >
-                {item.label}
-              </Link>
+              item.children ? (
+                item.children.map(child => (
+                  <Link
+                    key={child.to}
+                    to={child.to}
+                    className="eyebrow link-hairline w-fit py-1 text-ink-foreground/70 hover:text-ink-foreground"
+                  >
+                    {child.label}
+                  </Link>
+                ))
+              ) : (
+                <Link
+                  key={item.to}
+                  to={item.to!}
+                  className="eyebrow link-hairline w-fit py-1 text-ink-foreground/70 hover:text-ink-foreground"
+                >
+                  {item.label}
+                </Link>
+              )
             ))}
             <a
               href={SITE.registerUrl}
@@ -31,7 +43,7 @@ export function Footer() {
               rel="noreferrer"
               className="eyebrow link-hairline w-fit py-1 text-primary"
             >
-              Register
+              GET TICKET
             </a>
           </nav>
 

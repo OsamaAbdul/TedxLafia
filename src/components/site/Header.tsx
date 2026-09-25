@@ -3,6 +3,7 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Button } from "@/components/ui/button";
+
 import { NAV, SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { EASE } from "./Reveal";
@@ -43,12 +44,7 @@ export function Header() {
 
   return (
     <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-500",
-        scrolled || open
-          ? "border-border bg-background/85 backdrop-blur-md"
-          : "border-transparent bg-transparent",
-      )}
+      className="fixed inset-x-0 top-0 z-50 border-b border-white/20 bg-black/20 backdrop-blur-md transition-all duration-500 text-white"
     >
       <a
         href="#main"
@@ -61,18 +57,39 @@ export function Header() {
 
         <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
           {NAV.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className="eyebrow link-hairline py-2 text-foreground/80 transition-colors hover:text-foreground"
-              activeProps={{ className: "text-primary" }}
-            >
-              {item.label}
-            </Link>
+            item.children ? (
+              <div key={item.label} className="group relative">
+                <button className="eyebrow link-hairline py-6 -my-4 text-white/80 transition-colors group-hover:text-white outline-none cursor-default">
+                  {item.label}
+                </button>
+                <div className="absolute left-0 top-full hidden w-48 opacity-0 group-hover:block group-hover:opacity-100 transition-opacity">
+                  <div className="bg-background border border-border rounded-xl p-1.5 shadow-editorial">
+                    {item.children.map((child) => (
+                      <Link
+                        key={child.to}
+                        to={child.to}
+                        className="block w-full px-3 py-2 text-sm font-medium rounded-lg text-foreground hover:bg-ink hover:text-ink-foreground transition-colors"
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <Link
+                key={item.to}
+                to={item.to!}
+                className="eyebrow link-hairline py-2 text-white/80 transition-colors hover:text-white"
+                activeProps={{ className: "text-primary" }}
+              >
+                {item.label}
+              </Link>
+            )
           ))}
           <Button asChild variant="editorial" size="editorial">
             <a href={SITE.registerUrl} target="_blank" rel="noreferrer">
-              Register
+              GET TICKET
             </a>
           </Button>
         </nav>
@@ -83,7 +100,7 @@ export function Header() {
           aria-expanded={open}
           aria-controls="mobile-nav"
           aria-label={open ? "Close menu" : "Open menu"}
-          className="grid h-11 w-11 shrink-0 place-items-center border border-border lg:hidden"
+          className="grid h-11 w-11 shrink-0 place-items-center border border-white/30 lg:hidden text-white"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
@@ -98,26 +115,45 @@ export function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.35, ease: EASE }}
-            className="grid-bg h-[calc(100dvh-5rem)] overflow-y-auto border-t bg-background lg:hidden"
+            className="grid-bg h-[calc(100dvh-5rem)] overflow-y-auto border-t bg-background lg:hidden text-foreground"
           >
             <ul className="mx-auto flex max-w-7xl flex-col px-6 py-6">
               {NAV.map((item, i) => (
                 <motion.li
-                  key={item.to}
+                  key={item.label}
                   initial={{ opacity: 0, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 * i, duration: 0.4, ease: EASE }}
-                  className="border-b"
+                  className="border-b flex flex-col py-2"
                 >
-                  <Link
-                    to={item.to}
-                    onClick={() => setOpen(false)}
-                    className="flex items-center justify-between py-5 font-display text-3xl font-light"
-                    activeProps={{ className: "text-primary" }}
-                  >
-                    {item.label}
-                    <span className="eyebrow text-muted-foreground">0{i + 1}</span>
-                  </Link>
+                  {item.children ? (
+                    <div className="flex flex-col gap-3 py-3">
+                      <span className="font-display text-3xl font-light text-muted-foreground">{item.label}</span>
+                      <div className="flex flex-col gap-4 pl-4 border-l border-border mt-2">
+                        {item.children.map((child) => (
+                          <Link
+                            key={child.to}
+                            to={child.to}
+                            onClick={() => setOpen(false)}
+                            className="font-display text-2xl font-light text-foreground"
+                            activeProps={{ className: "text-primary" }}
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <Link
+                      to={item.to!}
+                      onClick={() => setOpen(false)}
+                      className="flex items-center justify-between py-3 font-display text-3xl font-light"
+                      activeProps={{ className: "text-primary" }}
+                    >
+                      {item.label}
+                      <span className="eyebrow text-muted-foreground">0{i + 1}</span>
+                    </Link>
+                  )}
                 </motion.li>
               ))}
               <li className="pt-8">
