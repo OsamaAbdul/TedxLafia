@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { NAV, SITE } from "@/lib/site";
 import { NewsletterForm } from "./NewsletterForm";
 import { Logo } from "./Header";
+import { TicketButton } from "./TicketButton";
 
 export function Footer() {
   return (
@@ -37,14 +38,12 @@ export function Footer() {
                 </Link>
               )
             ))}
-            <a
-              href={SITE.registerUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="eyebrow link-hairline w-fit py-1 text-primary"
+            <TicketButton
+              variant="link"
+              className="eyebrow link-hairline w-fit py-1 text-primary h-auto p-0 rounded-none justify-start"
             >
               GET TICKET
-            </a>
+            </TicketButton>
           </nav>
 
           <div>

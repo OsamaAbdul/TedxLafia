@@ -58,8 +58,8 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --font-display: "Cormorant Garamond", "Times New Roman", serif;
-  --font-sans: "Jost", "Futura", "Helvetica Neue", sans-serif;
+  --font-display: "Cormorant Garamond", Garamond, Baskerville, "Times New Roman", serif;
+  --font-sans: "Cormorant Garamond", Garamond, Baskerville, "Times New Roman", serif;
 
   --shadow-editorial: 0 30px 60px -30px color-mix(in oklab, var(--ink) 35%, transparent);
   --shadow-red: 0 20px 50px -20px color-mix(in oklab, var(--primary) 55%, transparent);
@@ -155,6 +155,8 @@
     font-family: var(--font-sans);
     font-feature-settings: "ss01", "kern";
     -webkit-font-smoothing: antialiased;
+    text-align: justify;
+    hyphens: auto;
   }
 
   h1,

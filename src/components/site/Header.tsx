@@ -3,6 +3,7 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Button } from "@/components/ui/button";
+import { TicketButton } from "./TicketButton";
 
 import { NAV, SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -87,11 +88,9 @@ export function Header() {
               </Link>
             )
           ))}
-          <Button asChild variant="editorial" size="editorial">
-            <a href={SITE.registerUrl} target="_blank" rel="noreferrer">
-              GET TICKET
-            </a>
-          </Button>
+          <TicketButton>
+            GET TICKET
+          </TicketButton>
         </nav>
 
         <button
@@ -157,11 +156,9 @@ export function Header() {
                 </motion.li>
               ))}
               <li className="pt-8">
-                <Button asChild variant="editorial" size="editorial" className="w-full">
-                  <a href={SITE.registerUrl} target="_blank" rel="noreferrer">
-                    Register for TEDxLafia
-                  </a>
-                </Button>
+                <TicketButton className="w-full">
+                  Register for TEDxLafia
+                </TicketButton>
               </li>
             </ul>
           </motion.nav>

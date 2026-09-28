@@ -11,6 +11,7 @@ import { SpeakersPreviewSection } from "@/components/site/SpeakersPreviewSection
 import { NewsSection } from "@/components/site/NewsSection";
 import { SponsorsPreviewSection } from "@/components/site/SponsorsPreviewSection";
 import { ExploreSection } from "@/components/site/ExploreSection";
+import { TicketButton } from "@/components/site/TicketButton";
 export const Route = createFileRoute("/")({
   component: HomePage,
 });
@@ -46,12 +47,11 @@ function HomePage() {
           </div>
         }
       >
-        <Link
-          to="/"
+        <TicketButton
           className="inline-flex h-14 items-center justify-center rounded-full bg-primary px-8 text-sm font-medium uppercase tracking-widest text-primary-foreground transition-all hover:bg-primary/90 hover:scale-105 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         >
           Get Ticket
-        </Link>
+        </TicketButton>
         <Link
           to="/partners"
           className="inline-flex h-14 items-center justify-center rounded-full border border-white/30 bg-white/10 backdrop-blur-md px-8 text-sm font-medium uppercase tracking-widest text-white transition-all hover:bg-white/20 hover:scale-105 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"

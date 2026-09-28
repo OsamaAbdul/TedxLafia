@@ -5,7 +5,7 @@ import { Reveal } from "./Reveal";
 export function HighlightsSection() {
   const highlights = [
     {
-      title: "TEDxLafia 2025: The Renaissance",
+      title: "TedxLafia 2025: The Future is Now",
       description: "A deep dive into how technology and culture are reshaping the future of Nasarawa State.",
       image: "/highlight/IMG_1047.jpg",
       link: "/events",
@@ -39,9 +39,9 @@ export function HighlightsSection() {
             <Reveal key={item.title} delay={i * 0.1}>
               <Link
                 to={item.link}
-                className="group flex flex-col h-full border border-white/20 bg-black/20 backdrop-blur-md overflow-hidden transition-all duration-300 hover:border-primary hover:shadow-editorial"
+                className="group flex flex-col h-full border border-white/20 bg-black overflow-hidden transition-all duration-300 hover:border-primary hover:shadow-editorial"
               >
-                <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                <div className="relative aspect-[4/3] overflow-hidden bg-black">
                   <img
                     src={item.image}
                     alt={item.title}
