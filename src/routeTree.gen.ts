@@ -16,7 +16,9 @@ import { Route as EventsRouteImport } from './routes/events'
 import { Route as JoinRouteImport } from './routes/join'
 import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as SpeakersRouteImport } from './routes/speakers'
+import { Route as SponsorsRouteImport } from './routes/sponsors'
 import { Route as TeamRouteImport } from './routes/team'
+import { Route as WhyJoinUsRouteImport } from './routes/why-join-us'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -53,9 +55,19 @@ const SpeakersRoute = SpeakersRouteImport.update({
   path: '/speakers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SponsorsRoute = SponsorsRouteImport.update({
+  id: '/sponsors',
+  path: '/sponsors',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TeamRoute = TeamRouteImport.update({
   id: '/team',
   path: '/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WhyJoinUsRoute = WhyJoinUsRouteImport.update({
+  id: '/why-join-us',
+  path: '/why-join-us',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -67,7 +79,9 @@ export interface FileRoutesByFullPath {
   '/join': typeof JoinRoute
   '/partners': typeof PartnersRoute
   '/speakers': typeof SpeakersRoute
+  '/sponsors': typeof SponsorsRoute
   '/team': typeof TeamRoute
+  '/why-join-us': typeof WhyJoinUsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -77,7 +91,9 @@ export interface FileRoutesByTo {
   '/join': typeof JoinRoute
   '/partners': typeof PartnersRoute
   '/speakers': typeof SpeakersRoute
+  '/sponsors': typeof SponsorsRoute
   '/team': typeof TeamRoute
+  '/why-join-us': typeof WhyJoinUsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -88,7 +104,9 @@ export interface FileRoutesById {
   '/join': typeof JoinRoute
   '/partners': typeof PartnersRoute
   '/speakers': typeof SpeakersRoute
+  '/sponsors': typeof SponsorsRoute
   '/team': typeof TeamRoute
+  '/why-join-us': typeof WhyJoinUsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -100,7 +118,9 @@ export interface FileRouteTypes {
     | '/join'
     | '/partners'
     | '/speakers'
+    | '/sponsors'
     | '/team'
+    | '/why-join-us'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -110,7 +130,9 @@ export interface FileRouteTypes {
     | '/join'
     | '/partners'
     | '/speakers'
+    | '/sponsors'
     | '/team'
+    | '/why-join-us'
   id:
     | '__root__'
     | '/'
@@ -120,7 +142,9 @@ export interface FileRouteTypes {
     | '/join'
     | '/partners'
     | '/speakers'
+    | '/sponsors'
     | '/team'
+    | '/why-join-us'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -131,7 +155,9 @@ export interface RootRouteChildren {
   JoinRoute: typeof JoinRoute
   PartnersRoute: typeof PartnersRoute
   SpeakersRoute: typeof SpeakersRoute
+  SponsorsRoute: typeof SponsorsRoute
   TeamRoute: typeof TeamRoute
+  WhyJoinUsRoute: typeof WhyJoinUsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -185,11 +211,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SpeakersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sponsors': {
+      id: '/sponsors'
+      path: '/sponsors'
+      fullPath: '/sponsors'
+      preLoaderRoute: typeof SponsorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/team': {
       id: '/team'
       path: '/team'
       fullPath: '/team'
       preLoaderRoute: typeof TeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/why-join-us': {
+      id: '/why-join-us'
+      path: '/why-join-us'
+      fullPath: '/why-join-us'
+      preLoaderRoute: typeof WhyJoinUsRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -203,7 +243,9 @@ const rootRouteChildren: RootRouteChildren = {
   JoinRoute: JoinRoute,
   PartnersRoute: PartnersRoute,
   SpeakersRoute: SpeakersRoute,
+  SponsorsRoute: SponsorsRoute,
   TeamRoute: TeamRoute,
+  WhyJoinUsRoute: WhyJoinUsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

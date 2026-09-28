@@ -2,13 +2,15 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ShaderBackground } from "@/components/ui/waves-shader";
 import { PageHero } from "@/components/site/PageHero";
 import { RegisterBanner } from "@/components/site/RegisterBanner";
-import { SectionHeading } from "@/components/site/SectionHeading";
 import { Reveal } from "@/components/site/Reveal";
-import { NAV } from "@/lib/site";
-import { PartnerLogos } from "@/components/site/PartnerLogos";
 import { HighlightsSection } from "@/components/site/HighlightsSection";
 import { StatsSection } from "@/components/site/StatsSection";
-
+import { WhyJoinSection } from "@/components/site/WhyJoinSection";
+import { SplitImageSection } from "@/components/site/SplitImageSection";
+import { SpeakersPreviewSection } from "@/components/site/SpeakersPreviewSection";
+import { NewsSection } from "@/components/site/NewsSection";
+import { SponsorsPreviewSection } from "@/components/site/SponsorsPreviewSection";
+import { ExploreSection } from "@/components/site/ExploreSection";
 export const Route = createFileRoute("/")({
   component: HomePage,
 });
@@ -33,7 +35,7 @@ function HomePage() {
           />
         }
         bottomOverlay={
-          <div 
+          <div
             className="absolute inset-x-0 -bottom-32 h-[32rem] w-full pointer-events-none"
             style={{
               maskImage: "linear-gradient(to bottom, transparent, black 25%, black 75%, transparent)",
@@ -75,37 +77,34 @@ function HomePage() {
           <StatsSection />
         </div>
       </div>
-      <PartnerLogos />
 
-      <section className="section-pad">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <SectionHeading
-            eyebrow="Explore"
-            title="Discover TEDxLafia"
-            description="Our platform exists because our city is full of people solving real problems. We are creating a stage for the ideas already here."
-          />
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {NAV.map((item, i) => {
-              const to = item.to || item.children?.[0]?.to;
-              if (!to) return null;
 
-              return (
-                <Reveal key={item.label} delay={i * 0.1}>
-                  <Link
-                    to={to}
-                    className="group flex flex-col justify-between border border-border bg-background p-8 transition-colors hover:border-primary hover:bg-ink hover:text-ink-foreground h-40"
-                  >
-                    <span className="font-display text-3xl font-light">{item.label}</span>
-                    <span className="eyebrow text-muted-foreground group-hover:text-primary">
-                      Explore &rarr;
-                    </span>
-                  </Link>
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+
+      <WhyJoinSection />
+      
+      <SplitImageSection 
+        eyebrow="Testimony from our attendees"
+        title="I came seeking inspiration and left with a vision. The future of Lafia starts right here."
+        image="/attendees/IMG_1030.jpg"
+        imageAlt="Attendee Testimony"
+        imagePosition="left"
+      />
+
+      <SpeakersPreviewSection />
+
+      <SplitImageSection 
+        eyebrow="Words of Wisdom"
+        title='"A single idea, planted in fertile soil, can shade generations to come. Listen, learn, and lead with purpose."'
+        image="/attendees/IMG_1301.jpg"
+        imageAlt="Elderly Advice"
+        imagePosition="right"
+      />
+
+      <NewsSection />
+
+      <SponsorsPreviewSection />
+
+      <ExploreSection />
 
       <RegisterBanner />
     </>

@@ -12,18 +12,22 @@ export function PageHero({
   bgImages,
   children,
   bottomOverlay,
+  className,
 }: {
   eyebrow: string;
   title: ReactNode;
   description?: string;
   aside?: ReactNode;
   bgImage?: string;
-  bgImages?: (string | { url: string; position: string })[];
+  bgImages?: (string | { url: string; position?: string; size?: string })[];
   children?: ReactNode;
   bottomOverlay?: ReactNode;
+  className?: string;
 }) {
   const images = (bgImages || (bgImage ? [bgImage] : [])).map((img) =>
-    typeof img === "string" ? { url: img, position: "center" } : img
+    typeof img === "string" 
+      ? { url: img, position: "center", size: "cover" } 
+      : { url: img.url, position: img.position || "center", size: img.size || "cover" }
   );
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -38,20 +42,35 @@ export function PageHero({
   }, [images.length]);
 
   return (
-    <section className="relative text-white pt-32 pb-16 lg:pt-44 lg:pb-24 z-20">
+    <section className={`relative text-white overflow-hidden pt-32 pb-16 lg:pt-44 lg:pb-24 z-20 ${className || ""}`}>
       {images.length > 0 ? (
         <>
           <AnimatePresence>
+            {/* Blurred backdrop layer */}
+            <motion.div
+              key={`blur-${currentIndex}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.5 }}
+              className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center blur-3xl scale-110 opacity-60"
+              style={{ 
+                backgroundImage: `url(${images[currentIndex]?.url})`,
+              }}
+              aria-hidden="true"
+            />
+            {/* Main image layer */}
             <motion.div
               key={currentIndex}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 1.5 }}
-              className="pointer-events-none absolute inset-0 z-0 bg-cover bg-no-repeat"
+              className="pointer-events-none absolute inset-0 z-0 bg-no-repeat"
               style={{ 
                 backgroundImage: `url(${images[currentIndex]?.url})`,
-                backgroundPosition: images[currentIndex]?.position
+                backgroundPosition: images[currentIndex]?.position,
+                backgroundSize: images[currentIndex]?.size
               }}
               aria-hidden="true"
             />

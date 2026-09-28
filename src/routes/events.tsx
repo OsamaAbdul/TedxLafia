@@ -27,15 +27,6 @@ export const Route = createFileRoute("/events")({
   component: Events,
 });
 
-const SCHEDULE = [
-  { time: "09:00", title: "Doors and coffee", note: "Registration, name badges, first conversations." },
-  { time: "10:00", title: "Session one — Ground", note: "Three talks on land, food and the work of feeding a state." },
-  { time: "11:30", title: "Interval", note: "Refreshments and a live performance." },
-  { time: "12:15", title: "Session two — Build", note: "Three talks on health, technology and small enterprise." },
-  { time: "13:45", title: "Lunch", note: "Long tables, mixed seating, deliberately." },
-  { time: "15:00", title: "Session three — Voice", note: "Two closing talks and a poem." },
-  { time: "16:30", title: "Close", note: "Photos on the red circle, then the after-conversation." },
-];
 
 function Events() {
   const { data: events } = useSuspenseQuery(eventsQuery);
@@ -48,54 +39,30 @@ function Events() {
       <PageHero
         eyebrow="Events"
         title={
-          <>
+          <div className="text-4xl sm:text-5xl lg:text-6xl">
             Where and when
             <span className="block italic text-primary">we gather.</span>
-          </>
+          </div>
         }
-        description="One flagship edition each year, plus smaller salons where a single question gets a whole evening. Every gathering is ticketed, seated and deliberately small."
+        bgImages={["/teaM/team-2.jpeg"]}
       />
 
-      <section className="section-pad">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <SectionHeading
-            eyebrow={upcoming.length ? "Coming up" : "Programme"}
-            title={upcoming.length ? "Next on the calendar" : "Nothing scheduled just yet"}
-            description={
-              upcoming.length
-                ? "Registration opens to our newsletter subscribers first, then to the public while seats last."
-                : "Join the newsletter and you'll hear about the next edition before anyone else."
-            }
-          />
-          <div className="mt-12 grid gap-8">
-            {upcoming.map((e, i) => (
-              <EventCard key={e.id} event={e} featured={i === 0} />
-            ))}
-          </div>
-        </div>
-      </section>
 
-      <section className="grid-bg grid-bg-ink bg-ink text-ink-foreground">
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
-          <SectionHeading
-            eyebrow="A day at TEDxLafia"
-            title="The shape of the programme"
-            description="Times are indicative — the running order is confirmed a fortnight before each edition."
-            invert
-          />
-          <ol className="mt-14 border-t border-ink-foreground/15">
-            {SCHEDULE.map((s, i) => (
-              <Reveal
-                key={s.time}
-                delay={i * 0.05}
-                className="grid gap-2 border-b border-ink-foreground/15 py-6 sm:grid-cols-[7rem_1fr_1fr] sm:items-baseline sm:gap-8"
-              >
-                <p className="eyebrow text-primary">{s.time}</p>
-                <h3 className="font-display text-2xl font-light">{s.title}</h3>
-                <p className="text-sm leading-relaxed text-ink-foreground/60">{s.note}</p>
-              </Reveal>
-            ))}
-          </ol>
+
+
+      <section className="section-pad bg-black text-white">
+        <div className="mx-auto max-w-4xl px-6 lg:px-10">
+          <Reveal>
+            <h2 className="font-display text-4xl sm:text-5xl mb-8 text-center">Our Maiden Event</h2>
+            <div className="space-y-6 text-lg text-white/80 leading-relaxed text-center">
+              <p>
+                TEDxLafia held its maiden event on 10 December 2025 under the theme “The Future Is Now.” The event brought together inspiring speakers, young innovators, professionals, creatives, and community leaders for a day of thought-provoking ideas, meaningful conversations, and connections.
+              </p>
+              <p>
+                As the first TEDx event in Nasarawa State, TEDxLafia created a platform for ideas worth spreading, highlighting stories and perspectives capable of inspiring positive change within our community and beyond. The event marked the beginning of our journey to build a lasting culture of ideas, innovation, and impact in Nasarawa State.
+              </p>
+            </div>
+          </Reveal>
         </div>
       </section>
 

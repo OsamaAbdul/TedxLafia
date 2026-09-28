@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { PageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SpeakerCard } from "@/components/site/Cards";
@@ -30,39 +31,55 @@ export const Route = createFileRoute("/speakers")({
   component: Speakers,
 });
 
-const STEPS = [
-  { title: "Nominate", body: "Anyone can nominate — including yourself. Tell us the idea in three sentences, not the CV." },
-  { title: "Conversation", body: "Our curation team calls shortlisted nominees to find the sharpest version of the idea." },
-  { title: "Rehearsal", body: "Selected speakers get six weeks of coaching and three full rehearsals before stage day." },
-];
+
 
 function Speakers() {
   const { data: speakers } = useSuspenseQuery(speakersQuery);
+  const [activeYear, setActiveYear] = useState<"2025" | "2026">("2025");
 
   return (
     <>
-      <PageHero
-        eyebrow="Speakers"
-        title={
-          <>
-            Eighteen minutes.
-            <span className="block italic text-primary">One idea each.</span>
-          </>
-        }
-        description="No panels, no keynotes for hire, no sales pitches. Every TEDxLafia speaker is chosen for a single idea they have tested in the real world — and then rehearsed until it lands."
-      />
-
-      <section className="section-pad">
+      <section className="section-pad bg-black text-white">
+        <div className="mx-auto max-w-4xl px-6 lg:px-10">
+          <h1 className="text-4xl font-display">Meet Our Speakers</h1>
+          <p className="text-lg text-white/80 leading-relaxed text-center">Discover the thought leaders and innovators who will inspire, challenge, and engage you with their unique perspectives and ideas.</p>
+        </div>
+      </section>
+      <section className="section-pad bg-black text-white">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <h2 className="mb-10 font-display text-5xl font-light text-foreground">2025 Speakers</h2>
-          <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
-            {speakers2025.map((s, i) => (
-              <SpeakerCard key={s.id} speaker={s as any} index={i} />
-            ))}
-            {speakers.map((s, i) => (
-              <SpeakerCard key={s.id} speaker={s} index={i + speakers2025.length} />
-            ))}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-10 gap-6">
+            <h2 className="font-display text-5xl font-light text-white">{activeYear} Speakers</h2>
+            <div className="flex bg-white/10 rounded-full p-1 border border-white/20 self-start sm:self-auto">
+              <button 
+                onClick={() => setActiveYear("2025")} 
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeYear === "2025" ? "bg-primary text-primary-foreground" : "text-white/70 hover:text-white"}`}
+              >
+                2025
+              </button>
+              <button 
+                onClick={() => setActiveYear("2026")} 
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeYear === "2026" ? "bg-primary text-primary-foreground" : "text-white/70 hover:text-white"}`}
+              >
+                2026
+              </button>
+            </div>
           </div>
+          
+          {activeYear === "2025" ? (
+            <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
+              {speakers2025.map((s, i) => (
+                <SpeakerCard key={s.id} speaker={s as any} index={i} />
+              ))}
+              {speakers.map((s, i) => (
+                <SpeakerCard key={s.id} speaker={s} index={i + speakers2025.length} />
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-24 text-center border border-dashed border-white/20 rounded-3xl">
+              <h3 className="text-3xl font-display text-white/50 mb-4">Coming Soon</h3>
+              <p className="text-white/40 max-w-md">Our 2026 speaker lineup is currently being curated. Check back later for updates.</p>
+            </div>
+          )}
         </div>
       </section>
 
