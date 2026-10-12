@@ -15,6 +15,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as JoinRouteImport } from './routes/join'
 import { Route as PartnersRouteImport } from './routes/partners'
+import { Route as RegisterRouteImport } from './routes/register'
 import { Route as SpeakersRouteImport } from './routes/speakers'
 import { Route as SponsorsRouteImport } from './routes/sponsors'
 import { Route as TeamRouteImport } from './routes/team'
@@ -50,6 +51,11 @@ const PartnersRoute = PartnersRouteImport.update({
   path: '/partners',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SpeakersRoute = SpeakersRouteImport.update({
   id: '/speakers',
   path: '/speakers',
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/events': typeof EventsRoute
   '/join': typeof JoinRoute
   '/partners': typeof PartnersRoute
+  '/register': typeof RegisterRoute
   '/speakers': typeof SpeakersRoute
   '/sponsors': typeof SponsorsRoute
   '/team': typeof TeamRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/events': typeof EventsRoute
   '/join': typeof JoinRoute
   '/partners': typeof PartnersRoute
+  '/register': typeof RegisterRoute
   '/speakers': typeof SpeakersRoute
   '/sponsors': typeof SponsorsRoute
   '/team': typeof TeamRoute
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/events': typeof EventsRoute
   '/join': typeof JoinRoute
   '/partners': typeof PartnersRoute
+  '/register': typeof RegisterRoute
   '/speakers': typeof SpeakersRoute
   '/sponsors': typeof SponsorsRoute
   '/team': typeof TeamRoute
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/events'
     | '/join'
     | '/partners'
+    | '/register'
     | '/speakers'
     | '/sponsors'
     | '/team'
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/events'
     | '/join'
     | '/partners'
+    | '/register'
     | '/speakers'
     | '/sponsors'
     | '/team'
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/events'
     | '/join'
     | '/partners'
+    | '/register'
     | '/speakers'
     | '/sponsors'
     | '/team'
@@ -154,6 +166,7 @@ export interface RootRouteChildren {
   EventsRoute: typeof EventsRoute
   JoinRoute: typeof JoinRoute
   PartnersRoute: typeof PartnersRoute
+  RegisterRoute: typeof RegisterRoute
   SpeakersRoute: typeof SpeakersRoute
   SponsorsRoute: typeof SponsorsRoute
   TeamRoute: typeof TeamRoute
@@ -204,6 +217,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PartnersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/speakers': {
       id: '/speakers'
       path: '/speakers'
@@ -242,6 +262,7 @@ const rootRouteChildren: RootRouteChildren = {
   EventsRoute: EventsRoute,
   JoinRoute: JoinRoute,
   PartnersRoute: PartnersRoute,
+  RegisterRoute: RegisterRoute,
   SpeakersRoute: SpeakersRoute,
   SponsorsRoute: SponsorsRoute,
   TeamRoute: TeamRoute,

@@ -1,6 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { SITE } from "@/lib/site";
+import { TicketButton } from "./TicketButton";
 import { Reveal } from "./Reveal";
 
 export function RegisterBanner() {
@@ -18,11 +17,9 @@ export function RegisterBanner() {
           </p>
         </Reveal>
         <Reveal delay={0.15} className="flex items-end lg:justify-end">
-          <Button asChild variant="on-red" size="editorial">
-            <a href={SITE.registerUrl} target="_blank" rel="noreferrer">
-              Register now <ArrowUpRight />
-            </a>
-          </Button>
+          <TicketButton variant="on-red" size="editorial">
+            Register now <ArrowUpRight className="ml-1 h-4 w-4 inline-block" />
+          </TicketButton>
         </Reveal>
       </div>
     </section>

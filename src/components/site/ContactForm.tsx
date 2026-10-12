@@ -1,37 +1,66 @@
 import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
 
 const field =
   "w-full border-0 border-b border-input bg-transparent px-0 py-3 text-base outline-none transition-colors placeholder:text-muted-foreground/60 focus-visible:border-primary";
 
+const WEB3FORMS_ACCESS_KEY: string =
+  ((import.meta.env as Record<string, string | undefined>)["VITE_WEB3FORMS_ACCESS_KEY"] || "");
+
 export function ContactForm({ defaultSubject = "" }: { defaultSubject?: string }) {
   const [busy, setBusy] = useState(false);
+  const [result, setResult] = useState("");
   const [form, setForm] = useState({ name: "", email: "", subject: defaultSubject, message: "" });
 
   const update = (k: keyof typeof form) => (e: { target: { value: string } }) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
-  async function onSubmit(e: FormEvent) {
-    e.preventDefault();
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     if (busy) return;
-    setBusy(true);
-    const { error } = await supabase.from("contact_messages").insert({
-      name: form.name.trim(),
-      email: form.email.trim(),
-      subject: form.subject.trim(),
-      message: form.message.trim(),
-    });
-    setBusy(false);
-    if (error) {
-      toast.error("Message not sent.", { description: "Please try again in a moment." });
+
+    if (!WEB3FORMS_ACCESS_KEY) {
+      toast.error("Configuration Error", {
+        description: "VITE_WEB3FORMS_ACCESS_KEY is not configured in your environment.",
+      });
       return;
     }
-    toast.success("Message received.", {
-      description: "The TEDxLafia team will reply within a few days.",
-    });
-    setForm({ name: "", email: "", subject: "", message: "" });
+
+    setBusy(true);
+    setResult("");
+
+    try {
+      const formData = new FormData(event.currentTarget);
+      formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setResult("Success!");
+        toast.success("Message received.", {
+          description: "The TEDxLafia team will reply within a few days.",
+        });
+        setForm({ name: "", email: "", subject: defaultSubject, message: "" });
+      } else {
+        setResult("Error");
+        toast.error("Message not sent.", {
+          description: data.message || "Please try again in a moment.",
+        });
+      }
+    } catch {
+      setResult("Error");
+      toast.error("Message not sent.", {
+        description: "Network error. Please try again in a moment.",
+      });
+    } finally {
+      setBusy(false);
+    }
   }
 
   return (
@@ -43,6 +72,7 @@ export function ContactForm({ defaultSubject = "" }: { defaultSubject?: string }
           </label>
           <input
             id="c-name"
+            name="name"
             required
             maxLength={120}
             autoComplete="name"
@@ -58,6 +88,7 @@ export function ContactForm({ defaultSubject = "" }: { defaultSubject?: string }
           </label>
           <input
             id="c-email"
+            name="email"
             type="email"
             required
             maxLength={254}
@@ -75,6 +106,7 @@ export function ContactForm({ defaultSubject = "" }: { defaultSubject?: string }
         </label>
         <input
           id="c-subject"
+          name="subject"
           maxLength={200}
           className={field}
           value={form.subject}
@@ -88,6 +120,7 @@ export function ContactForm({ defaultSubject = "" }: { defaultSubject?: string }
         </label>
         <textarea
           id="c-message"
+          name="message"
           required
           rows={5}
           maxLength={4000}
@@ -101,7 +134,20 @@ export function ContactForm({ defaultSubject = "" }: { defaultSubject?: string }
         <Button type="submit" variant="editorial" size="editorial" disabled={busy}>
           {busy ? "Sending…" : "Send message"}
         </Button>
+        {result && (
+          <p
+            className={`mt-4 text-sm font-medium ${
+              result === "Success!" ? "text-emerald-500" : "text-destructive"
+            }`}
+          >
+            {result === "Success!"
+              ? "Thank you! Your message has been sent successfully."
+              : "Failed to send message. Please try again."}
+          </p>
+        )}
       </div>
     </form>
   );
 }
+
+export default ContactForm;
