@@ -1010,7 +1010,7 @@ function RegisterPage() {
                       Submitting & Generating Pass…
                     </>
                   ) : (
-                    "Submit & Generate My Ticket"
+                    "Generate My Ticket"
                   )}
                 </Button>
               </div>
