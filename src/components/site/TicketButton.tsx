@@ -17,7 +17,7 @@ export function TicketButton({
 }: TicketButtonProps) {
   return (
     <Link
-      to="/register"
+      to="/tickets"
       className={cn(buttonVariants({ variant, size }), className)}
     >
       {children}

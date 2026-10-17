@@ -19,6 +19,7 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as SpeakersRouteImport } from './routes/speakers'
 import { Route as SponsorsRouteImport } from './routes/sponsors'
 import { Route as TeamRouteImport } from './routes/team'
+import { Route as TicketsRouteImport } from './routes/tickets'
 import { Route as WhyJoinUsRouteImport } from './routes/why-join-us'
 
 const IndexRoute = IndexRouteImport.update({
@@ -71,6 +72,11 @@ const TeamRoute = TeamRouteImport.update({
   path: '/team',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TicketsRoute = TicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WhyJoinUsRoute = WhyJoinUsRouteImport.update({
   id: '/why-join-us',
   path: '/why-join-us',
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/speakers': typeof SpeakersRoute
   '/sponsors': typeof SponsorsRoute
   '/team': typeof TeamRoute
+  '/tickets': typeof TicketsRoute
   '/why-join-us': typeof WhyJoinUsRoute
 }
 export interface FileRoutesByTo {
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/speakers': typeof SpeakersRoute
   '/sponsors': typeof SponsorsRoute
   '/team': typeof TeamRoute
+  '/tickets': typeof TicketsRoute
   '/why-join-us': typeof WhyJoinUsRoute
 }
 export interface FileRoutesById {
@@ -115,6 +123,7 @@ export interface FileRoutesById {
   '/speakers': typeof SpeakersRoute
   '/sponsors': typeof SponsorsRoute
   '/team': typeof TeamRoute
+  '/tickets': typeof TicketsRoute
   '/why-join-us': typeof WhyJoinUsRoute
 }
 export interface FileRouteTypes {
@@ -130,6 +139,7 @@ export interface FileRouteTypes {
     | '/speakers'
     | '/sponsors'
     | '/team'
+    | '/tickets'
     | '/why-join-us'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -143,6 +153,7 @@ export interface FileRouteTypes {
     | '/speakers'
     | '/sponsors'
     | '/team'
+    | '/tickets'
     | '/why-join-us'
   id:
     | '__root__'
@@ -156,6 +167,7 @@ export interface FileRouteTypes {
     | '/speakers'
     | '/sponsors'
     | '/team'
+    | '/tickets'
     | '/why-join-us'
   fileRoutesById: FileRoutesById
 }
@@ -170,6 +182,7 @@ export interface RootRouteChildren {
   SpeakersRoute: typeof SpeakersRoute
   SponsorsRoute: typeof SponsorsRoute
   TeamRoute: typeof TeamRoute
+  TicketsRoute: typeof TicketsRoute
   WhyJoinUsRoute: typeof WhyJoinUsRoute
 }
 
@@ -245,6 +258,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeamRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tickets': {
+      id: '/tickets'
+      path: '/tickets'
+      fullPath: '/tickets'
+      preLoaderRoute: typeof TicketsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/why-join-us': {
       id: '/why-join-us'
       path: '/why-join-us'
@@ -266,6 +286,7 @@ const rootRouteChildren: RootRouteChildren = {
   SpeakersRoute: SpeakersRoute,
   SponsorsRoute: SponsorsRoute,
   TeamRoute: TeamRoute,
+  TicketsRoute: TicketsRoute,
   WhyJoinUsRoute: WhyJoinUsRoute,
 }
 export const routeTree = rootRouteImport

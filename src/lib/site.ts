@@ -3,7 +3,8 @@ export const SITE = {
   tagline: "Ideas Worth Spreading",
   city: "Lafia, Nasarawa State, Nigeria",
   email: "hello@tedxlafia.com",
-  registerUrl: "/register",
+  registerUrl: "/tickets",
+  ticketsClosed: true,
   social: {
     instagram: "https://instagram.com/tedxlafia",
     x: "https://x.com/tedxlafia",

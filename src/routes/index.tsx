@@ -48,9 +48,12 @@ function HomePage() {
         }
       >
         <TicketButton
-          className="inline-flex h-14 items-center justify-center rounded-full bg-primary px-8 text-sm font-medium uppercase tracking-widest text-primary-foreground transition-all hover:bg-primary/90 hover:scale-105 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          className="inline-flex h-14 items-center justify-center gap-2.5 rounded-full bg-primary px-8 text-sm font-medium uppercase tracking-widest text-primary-foreground transition-all hover:bg-primary/90 hover:scale-105 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         >
-          Get Ticket
+          <span>Get Ticket</span>
+          <span className="rounded-full bg-black/30 border border-white/20 text-white text-[10px] px-2 py-0.5 font-bold uppercase tracking-wider">
+            Closed
+          </span>
         </TicketButton>
         <Link
           to="/partners"

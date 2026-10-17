@@ -88,8 +88,11 @@ export function Header() {
               </Link>
             )
           ))}
-          <TicketButton>
+          <TicketButton className="gap-2">
             GET TICKET
+            <span className="rounded-full bg-primary/20 text-primary border border-primary/40 px-1.5 py-0.5 text-[9px] font-semibold tracking-wider uppercase">
+              CLOSED
+            </span>
           </TicketButton>
         </nav>
 
@@ -156,8 +159,11 @@ export function Header() {
                 </motion.li>
               ))}
               <li className="pt-8">
-                <TicketButton className="w-full">
-                  Register for TEDxLafia
+                <TicketButton className="w-full flex items-center justify-between">
+                  <span>Get Ticket / Attend</span>
+                  <span className="rounded-full bg-primary/20 text-primary border border-primary/40 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider">
+                    Closed
+                  </span>
                 </TicketButton>
               </li>
             </ul>

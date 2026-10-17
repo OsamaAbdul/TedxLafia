@@ -42,7 +42,7 @@ export function Footer() {
               variant="link"
               className="eyebrow link-hairline w-fit py-1 text-primary h-auto p-0 rounded-none justify-start"
             >
-              GET TICKET
+              GET TICKET (CLOSED)
             </TicketButton>
           </nav>
 
