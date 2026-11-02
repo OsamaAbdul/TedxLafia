@@ -7,8 +7,12 @@ export type Partner = Database["public"]["Tables"]["partners"]["Row"];
 export type EventRow = Database["public"]["Tables"]["events"]["Row"];
 
 function publicClient() {
-  const key = process.env["SUPABASE_PUBLISHABLE_KEY"]!;
-  return createClient<Database>(process.env["SUPABASE_URL"]!, key, {
+  const url = process.env["SUPABASE_URL"] || process.env["VITE_SUPABASE_URL"];
+  const key = process.env["SUPABASE_PUBLISHABLE_KEY"] || process.env["VITE_SUPABASE_PUBLISHABLE_KEY"];
+  if (!url || !key) {
+    return null;
+  }
+  return createClient<Database>(url, key, {
     auth: { persistSession: false, autoRefreshToken: false },
     global: {
       fetch: (input, init) => {
@@ -24,7 +28,9 @@ function publicClient() {
 }
 
 export const listSpeakers = createServerFn({ method: "GET" }).handler(async () => {
-  const { data, error } = await publicClient()
+  const client = publicClient();
+  if (!client) return [] as Speaker[];
+  const { data, error } = await client
     .from("speakers")
     .select("*")
     .order("sort_order", { ascending: true });
@@ -32,11 +38,13 @@ export const listSpeakers = createServerFn({ method: "GET" }).handler(async () =
     console.error(error);
     return [] as Speaker[];
   }
-  return data;
+  return data ?? ([] as Speaker[]);
 });
 
 export const listPartners = createServerFn({ method: "GET" }).handler(async () => {
-  const { data, error } = await publicClient()
+  const client = publicClient();
+  if (!client) return [] as Partner[];
+  const { data, error } = await client
     .from("partners")
     .select("*")
     .order("sort_order", { ascending: true });
@@ -44,11 +52,13 @@ export const listPartners = createServerFn({ method: "GET" }).handler(async () =
     console.error(error);
     return [] as Partner[];
   }
-  return data;
+  return data ?? ([] as Partner[]);
 });
 
 export const listEvents = createServerFn({ method: "GET" }).handler(async () => {
-  const { data, error } = await publicClient()
+  const client = publicClient();
+  if (!client) return [] as EventRow[];
+  const { data, error } = await client
     .from("events")
     .select("*")
     .order("starts_at", { ascending: false });
@@ -56,5 +66,5 @@ export const listEvents = createServerFn({ method: "GET" }).handler(async () => 
     console.error(error);
     return [] as EventRow[];
   }
-  return data;
+  return data ?? ([] as EventRow[]);
 });

@@ -5,9 +5,9 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * TEDxLafia design system — Gucci-inspired editorial luxury.
+ * TEDxLafia design system.
  * Primary: TEDx red #E62E2D. Secondary: white. Ink: near-black.
- * Display: Cormorant Garamond (serif). UI/body: Jost (geometric sans).
+ * Display: Bricolage Grotesque. UI/body: Manrope.
  */
 
 @theme inline {
@@ -58,8 +58,8 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --font-display: "Cormorant Garamond", Garamond, Baskerville, "Times New Roman", serif;
-  --font-sans: "Cormorant Garamond", Garamond, Baskerville, "Times New Roman", serif;
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
 
   --shadow-editorial: 0 30px 60px -30px color-mix(in oklab, var(--ink) 35%, transparent);
   --shadow-red: 0 20px 50px -20px color-mix(in oklab, var(--primary) 55%, transparent);
@@ -153,10 +153,7 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "kern";
     -webkit-font-smoothing: antialiased;
-    text-align: justify;
-    hyphens: auto;
   }
 
   h1,
