@@ -22,7 +22,15 @@ function initials(name: string) {
     .join("");
 }
 
-export function SpeakerCard({ speaker, index = 0 }: { speaker: Speaker; index?: number }) {
+export function SpeakerCard({
+  speaker,
+  index = 0,
+  label = "Speaker",
+}: {
+  speaker: Speaker;
+  index?: number;
+  label?: string;
+}) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -53,7 +61,7 @@ export function SpeakerCard({ speaker, index = 0 }: { speaker: Speaker; index?: 
             )}
             <span className="absolute top-0 left-0 h-1.5 w-12 bg-primary transition-all duration-500 group-hover:w-full" />
           </div>
-          <p className="eyebrow mt-6 text-primary">Speaker {String(index + 1).padStart(2, "0")}</p>
+          <p className="eyebrow mt-6 text-primary">{label} {String(index + 1).padStart(2, "0")}</p>
           <h3 className="mt-3 font-display text-3xl leading-none font-light">{speaker.name}</h3>
           <p className="mt-2 text-sm text-muted-foreground">{speaker.title}</p>
           {speaker.talk_title && (
@@ -64,10 +72,10 @@ export function SpeakerCard({ speaker, index = 0 }: { speaker: Speaker; index?: 
         </motion.article>
       </DialogTrigger>
 
-      <DialogContent className="max-w-4xl p-0 sm:rounded-3xl lg:h-[80vh] border-0 overflow-hidden">
-        <div className="flex flex-col lg:flex-row h-full">
+      <DialogContent className="w-[calc(100vw-1.5rem)] max-w-4xl max-h-[90dvh] p-0 sm:rounded-3xl lg:h-[80vh] border-0 overflow-y-auto lg:overflow-hidden">
+        <div className="flex flex-col lg:flex-row lg:h-full">
           {/* Left side: Image */}
-          <div className="relative w-full lg:w-2/5 shrink-0 bg-ink h-64 lg:h-full">
+          <div className="relative w-full lg:w-2/5 shrink-0 bg-ink h-56 sm:h-64 lg:h-full">
             {speaker.photo_url ? (
               <img
                 src={speaker.photo_url}
@@ -84,9 +92,9 @@ export function SpeakerCard({ speaker, index = 0 }: { speaker: Speaker; index?: 
           </div>
           
           {/* Right side: Bio */}
-          <div className="flex w-full flex-col p-6 lg:w-3/5 lg:p-12 overflow-y-auto max-h-[80vh]">
+          <div className="flex min-h-0 w-full flex-1 flex-col p-6 lg:w-3/5 lg:p-12 lg:overflow-y-auto">
             <DialogHeader className="text-left">
-              <p className="eyebrow text-primary mb-2">Speaker {String(index + 1).padStart(2, "0")}</p>
+              <p className="eyebrow text-primary mb-2">{label} {String(index + 1).padStart(2, "0")}</p>
               <DialogTitle className="font-display text-4xl lg:text-5xl font-light">
                 {speaker.name}
               </DialogTitle>

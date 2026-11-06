@@ -11,6 +11,7 @@ import { speakersQuery } from "@/lib/queries";
 import { Link } from "@tanstack/react-router";
 import speakers2025 from "@/data/speakers.json";
 import speakers2026 from "@/data/speakers-2026.json";
+import hosts2026 from "@/data/hosts-2026.json";
 
 export const Route = createFileRoute("/speakers")({
   loader: ({ context }) => context.queryClient.ensureQueryData(speakersQuery),
@@ -90,7 +91,18 @@ function Speakers() {
         </div>
       </section>
 
-
+      {hosts2026.length > 0 && (
+        <section className="section-pad bg-black text-white">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <h2 className="font-display text-5xl font-light text-white mb-10">Host</h2>
+            <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
+              {hosts2026.map((h, i) => (
+                <SpeakerCard key={h.id} speaker={h as any} index={i} label="Host" />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <RegisterBanner />
     </>
