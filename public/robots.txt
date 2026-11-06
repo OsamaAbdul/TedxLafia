@@ -1,19 +1,24 @@
 User-agent: Googlebot
 Allow: /
 Disallow: /dev-vip-tickets
+Disallow: /dev-attendees
 
 User-agent: Bingbot
 Allow: /
 Disallow: /dev-vip-tickets
+Disallow: /dev-attendees
 
 User-agent: Twitterbot
 Allow: /
 Disallow: /dev-vip-tickets
+Disallow: /dev-attendees
 
 User-agent: facebookexternalhit
 Allow: /
 Disallow: /dev-vip-tickets
+Disallow: /dev-attendees
 
 User-agent: *
 Allow: /
 Disallow: /dev-vip-tickets
+Disallow: /dev-attendees

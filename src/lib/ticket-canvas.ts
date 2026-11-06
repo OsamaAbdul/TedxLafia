@@ -90,8 +90,10 @@ function drawQRCode(
   // Matrix modules
   ctx.fillStyle = fgColor;
   for (let r = 0; r < n; r++) {
+    const row = matrix[r];
+    if (!row) continue;
     for (let c = 0; c < n; c++) {
-      if (matrix[r][c]) {
+      if (row[c]) {
         ctx.fillRect(
           Math.floor(x + c * cellSize),
           Math.floor(y + r * cellSize),

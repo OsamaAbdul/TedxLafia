@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import React, { useState, useEffect, useMemo } from "react";
 import {
   ShieldCheck,
@@ -63,10 +63,12 @@ function generateSerial(): string {
 
 function emailToName(email: string): string {
   if (!email || !email.includes("@")) return "";
-  const userPart = email.split("@")[0];
+  const parts = email.split("@");
+  const userPart = parts[0] ?? "";
   const cleaned = userPart.replace(/[._+-]+/g, " ").trim();
   return cleaned
     .split(" ")
+    .filter(Boolean)
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
     .join(" ");
 }
@@ -83,13 +85,13 @@ function DevVipTicketsRoute() {
   // Single Ticket Form State
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
-  const [tier, setTier] = useState<string>(VIP_TIERS[0]);
+  const [tier, setTier] = useState<string>(VIP_TIERS[0] ?? "VVIP Guest of Honour");
   const [serial, setSerial] = useState<string>(generateSerial());
   const [orientation, setOrientation] = useState<TicketOrientation>("horizontal");
 
   // Bulk Generator State
   const [bulkInput, setBulkInput] = useState<string>("");
-  const [bulkTier, setBulkTier] = useState<string>(VIP_TIERS[0]);
+  const [bulkTier, setBulkTier] = useState<string>(VIP_TIERS[0] ?? "VVIP Guest of Honour");
 
   // Passes Directory State
   const [passes, setPasses] = useState<VipTicketData[]>([]);
@@ -107,6 +109,19 @@ function DevVipTicketsRoute() {
       const savedPasses = localStorage.getItem(STORAGE_KEY_PASSES);
       if (savedPasses) {
         setPasses(JSON.parse(savedPasses));
+      }
+
+      if (typeof window !== "undefined") {
+        const params = new URLSearchParams(window.location.search);
+        const qEmail = params.get("email");
+        const qName = params.get("name");
+        const qTier = params.get("tier");
+        if (qEmail) {
+          setEmail(qEmail);
+          if (qName) setName(qName);
+          if (qTier) setTier(qTier);
+          setActiveTab("single");
+        }
       }
     } catch (e) {
       console.error("Storage load error", e);
@@ -255,8 +270,8 @@ function DevVipTicketsRoute() {
     setIsExporting(true);
     toast.loading(`Downloading ${passes.length} VIP passes in sequence...`, { id: "batch-dl" });
 
-    for (let i = 0; i < passes.length; i++) {
-      await downloadTicketImage(passes[i], orientation);
+    for (const pass of passes) {
+      await downloadTicketImage(pass, orientation);
       // Small pause to allow browser download queue to process smoothly
       await new Promise((r) => setTimeout(r, 600));
     }
@@ -461,6 +476,17 @@ function DevVipTicketsRoute() {
                 </span>
               </button>
             </div>
+
+            <Button
+              asChild
+              variant="outline"
+              size="sm"
+              className="border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/10 text-xs"
+            >
+              <Link to="/dev-attendees">
+                <Users className="w-3.5 h-3.5 mr-1" /> Attendee List <ArrowRight className="w-3 h-3 ml-1" />
+              </Link>
+            </Button>
 
             <Button
               variant="outline"
