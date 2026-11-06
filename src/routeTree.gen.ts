@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DevVipTicketsRouteImport } from './routes/dev-vip-tickets'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as JoinRouteImport } from './routes/join'
 import { Route as PartnersRouteImport } from './routes/partners'
@@ -35,6 +36,11 @@ const AboutRoute = AboutRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevVipTicketsRoute = DevVipTicketsRouteImport.update({
+  id: '/dev-vip-tickets',
+  path: '/dev-vip-tickets',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EventsRoute = EventsRouteImport.update({
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/dev-vip-tickets': typeof DevVipTicketsRoute
   '/events': typeof EventsRoute
   '/join': typeof JoinRoute
   '/partners': typeof PartnersRoute
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/dev-vip-tickets': typeof DevVipTicketsRoute
   '/events': typeof EventsRoute
   '/join': typeof JoinRoute
   '/partners': typeof PartnersRoute
@@ -116,6 +124,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/dev-vip-tickets': typeof DevVipTicketsRoute
   '/events': typeof EventsRoute
   '/join': typeof JoinRoute
   '/partners': typeof PartnersRoute
@@ -132,6 +141,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/dev-vip-tickets'
     | '/events'
     | '/join'
     | '/partners'
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/dev-vip-tickets'
     | '/events'
     | '/join'
     | '/partners'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/dev-vip-tickets'
     | '/events'
     | '/join'
     | '/partners'
@@ -175,6 +187,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
+  DevVipTicketsRoute: typeof DevVipTicketsRoute
   EventsRoute: typeof EventsRoute
   JoinRoute: typeof JoinRoute
   PartnersRoute: typeof PartnersRoute
@@ -207,6 +220,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dev-vip-tickets': {
+      id: '/dev-vip-tickets'
+      path: '/dev-vip-tickets'
+      fullPath: '/dev-vip-tickets'
+      preLoaderRoute: typeof DevVipTicketsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/events': {
@@ -279,6 +299,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
+  DevVipTicketsRoute: DevVipTicketsRoute,
   EventsRoute: EventsRoute,
   JoinRoute: JoinRoute,
   PartnersRoute: PartnersRoute,
