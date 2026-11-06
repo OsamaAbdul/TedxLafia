@@ -3,9 +3,10 @@ import { Reveal } from "./Reveal";
 import { Link } from "@tanstack/react-router";
 import { SpeakerCard } from "./Cards";
 import speakers2025 from "@/data/speakers.json";
+import speakers2026 from "@/data/speakers-2026.json";
 
 export function SpeakersPreviewSection() {
-  const [speakerYear, setSpeakerYear] = useState<"2025" | "2026">("2025");
+  const [speakerYear, setSpeakerYear] = useState<"2025" | "2026">("2026");
 
   return (
     <section className="section-pad bg-black text-white">
@@ -18,16 +19,16 @@ export function SpeakersPreviewSection() {
                 <h2 className="font-display text-4xl sm:text-5xl">Meet Our Speakers</h2>
                 <div className="flex bg-white/10 rounded-full p-1 border border-white/20 self-start">
                   <button
-                    onClick={() => setSpeakerYear("2025")}
-                    className={`px-4 py-1.5 rounded-full text-xs font-medium transition-colors ${speakerYear === "2025" ? "bg-primary text-primary-foreground" : "text-white/70 hover:text-white"}`}
-                  >
-                    2025
-                  </button>
-                  <button
                     onClick={() => setSpeakerYear("2026")}
                     className={`px-4 py-1.5 rounded-full text-xs font-medium transition-colors ${speakerYear === "2026" ? "bg-primary text-primary-foreground" : "text-white/70 hover:text-white"}`}
                   >
                     2026
+                  </button>
+                  <button
+                    onClick={() => setSpeakerYear("2025")}
+                    className={`px-4 py-1.5 rounded-full text-xs font-medium transition-colors ${speakerYear === "2025" ? "bg-primary text-primary-foreground" : "text-white/70 hover:text-white"}`}
+                  >
+                    2025
                   </button>
                 </div>
               </div>
@@ -44,6 +45,12 @@ export function SpeakersPreviewSection() {
         {speakerYear === "2025" ? (
           <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
             {speakers2025.slice(0, 3).map((s, i) => (
+              <SpeakerCard key={s.id} speaker={s as any} index={i} />
+            ))}
+          </div>
+        ) : speakers2026.length > 0 ? (
+          <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
+            {speakers2026.slice(0, 3).map((s, i) => (
               <SpeakerCard key={s.id} speaker={s as any} index={i} />
             ))}
           </div>

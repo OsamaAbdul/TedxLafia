@@ -10,6 +10,7 @@ import { RegisterBanner } from "@/components/site/RegisterBanner";
 import { speakersQuery } from "@/lib/queries";
 import { Link } from "@tanstack/react-router";
 import speakers2025 from "@/data/speakers.json";
+import speakers2026 from "@/data/speakers-2026.json";
 
 export const Route = createFileRoute("/speakers")({
   loader: ({ context }) => context.queryClient.ensureQueryData(speakersQuery),
@@ -35,7 +36,7 @@ export const Route = createFileRoute("/speakers")({
 
 function Speakers() {
   const { data: speakers } = useSuspenseQuery(speakersQuery);
-  const [activeYear, setActiveYear] = useState<"2025" | "2026">("2025");
+  const [activeYear, setActiveYear] = useState<"2025" | "2026">("2026");
 
   return (
     <>
@@ -51,16 +52,16 @@ function Speakers() {
             <h2 className="font-display text-5xl font-light text-white">{activeYear} Speakers</h2>
             <div className="flex bg-white/10 rounded-full p-1 border border-white/20 self-start sm:self-auto">
               <button 
-                onClick={() => setActiveYear("2025")} 
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeYear === "2025" ? "bg-primary text-primary-foreground" : "text-white/70 hover:text-white"}`}
-              >
-                2025
-              </button>
-              <button 
                 onClick={() => setActiveYear("2026")} 
                 className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeYear === "2026" ? "bg-primary text-primary-foreground" : "text-white/70 hover:text-white"}`}
               >
                 2026
+              </button>
+              <button 
+                onClick={() => setActiveYear("2025")} 
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeYear === "2025" ? "bg-primary text-primary-foreground" : "text-white/70 hover:text-white"}`}
+              >
+                2025
               </button>
             </div>
           </div>
@@ -72,6 +73,12 @@ function Speakers() {
               ))}
               {speakers.map((s, i) => (
                 <SpeakerCard key={s.id} speaker={s} index={i + speakers2025.length} />
+              ))}
+            </div>
+          ) : speakers2026.length > 0 ? (
+            <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
+              {speakers2026.map((s, i) => (
+                <SpeakerCard key={s.id} speaker={s as any} index={i} />
               ))}
             </div>
           ) : (
